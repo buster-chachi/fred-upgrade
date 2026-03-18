@@ -61,7 +61,7 @@ curl -fsSL https://raw.githubusercontent.com/buster-chachi/fred-upgrade/main/mig
 
 ## Design Notes
 
-**Why Node.js 22 and not 24?** Node 22 is the current LTS release (supported until April 2027) and satisfies OpenClaw's `>=22.16.0` requirement. Node 24 is not yet LTS (expected October 2025) — once it is, bump `setup_22.x` to `setup_24.x` in `setup-linux.sh`.
+**Why Node.js 24?** Node 24 is the current LTS release (as of October 2025) and satisfies OpenClaw's `>=22.16.0` requirement.
 
 **Why not a single PowerShell script?** Once WSL2 is running, you're in Linux — that's the environment OpenClaw lives in. Keeping the Linux setup in bash means the scripts work correctly and get Fred comfortable with the tools he'll use going forward. The handoff from PowerShell → bash is intentional.
 

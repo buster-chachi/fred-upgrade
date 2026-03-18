@@ -30,8 +30,8 @@ ok "Installed: git, curl, python3, python3-pip, python3-venv, unzip, jq"
 if command -v node &>/dev/null; then
     ok "Node.js already installed: $(node --version)"
 else
-    info "Installing Node.js 22.x from NodeSource (OpenClaw requires >=22.16.0)..."
-    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+    info "Installing Node.js 24.x from NodeSource (OpenClaw requires >=22.16.0)..."
+    curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
     sudo apt-get install -y -qq nodejs
     ok "Node.js installed: $(node --version)"
 fi
