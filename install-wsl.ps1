@@ -29,30 +29,39 @@ if ($build -lt 19041) {
 Write-Host "Windows build $build detected. Good to go." -ForegroundColor Green
 Write-Host ""
 
-# Check if WSL is already installed
+# Check WSL2 and Ubuntu state independently
 $wslInstalled = Get-Command wsl -ErrorAction SilentlyContinue
+$wsl2Ready = $false
+$ubuntuReady = $false
+
 if ($wslInstalled) {
     $wslVersion = wsl --version 2>&1
     if ($wslVersion -match "WSL version") {
-        Write-Host "WSL2 is already installed!" -ForegroundColor Green
-        Write-Host ""
-        Write-Host "Checking for Ubuntu..." -ForegroundColor Yellow
+        $wsl2Ready = $true
         $distros = wsl --list --quiet 2>&1
-        if ($distros -match "Ubuntu") {
-            Write-Host "Ubuntu is already installed. Skip to Step 2." -ForegroundColor Green
-            Write-Host ""
-            Write-Host "Open Ubuntu from the Start menu or run: wsl" -ForegroundColor Cyan
-            exit 0
-        }
+        # wsl --list output can have null bytes on some versions; normalize it
+        $distroList = $distros -replace "`0", "" | Where-Object { $_ -match "Ubuntu" }
+        if ($distroList) { $ubuntuReady = $true }
     }
 }
 
-Write-Host "Installing WSL2 and Ubuntu..." -ForegroundColor Yellow
-Write-Host "This may take a few minutes. A reboot may be required." -ForegroundColor Yellow
-Write-Host ""
+if ($wsl2Ready -and $ubuntuReady) {
+    Write-Host "WSL2 and Ubuntu are already installed. Nothing to do here." -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Open Ubuntu from the Start menu or run: wsl" -ForegroundColor Cyan
+    Write-Host "Then follow Step 2 in the README." -ForegroundColor Cyan
+    exit 0
+}
 
-# Install WSL with Ubuntu (default)
-wsl --install -d Ubuntu
+if ($wsl2Ready -and -not $ubuntuReady) {
+    Write-Host "WSL2 is installed but Ubuntu was not found. Installing Ubuntu..." -ForegroundColor Yellow
+    wsl --install -d Ubuntu
+} else {
+    Write-Host "Installing WSL2 and Ubuntu..." -ForegroundColor Yellow
+    Write-Host "This may take a few minutes. A reboot may be required." -ForegroundColor Yellow
+    Write-Host ""
+    wsl --install -d Ubuntu
+}
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
