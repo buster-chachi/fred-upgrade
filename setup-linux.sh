@@ -22,9 +22,9 @@ header "Fred Upgrade: Linux Setup"
 info "Updating package lists..."
 sudo apt-get update -qq
 
-info "Installing base dependencies (git, curl, python3, pip)..."
-sudo apt-get install -y -qq git curl python3 python3-pip python3-venv unzip
-ok "Base dependencies installed"
+info "Installing base dependencies (git, curl, python3, pip, jq)..."
+sudo apt-get install -y -qq git curl python3 python3-pip python3-venv unzip jq
+ok "Installed: git, curl, python3, python3-pip, python3-venv, unzip, jq"
 
 # ── 2. Node.js (required by OpenClaw) ────────────────────────────
 if command -v node &>/dev/null; then
