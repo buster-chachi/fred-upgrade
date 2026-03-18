@@ -48,6 +48,8 @@ If you had OpenClaw configured on Windows, run this to carry over your workspace
 curl -fsSL https://raw.githubusercontent.com/buster-chachi/fred-upgrade/main/migrate.sh | bash
 ```
 
+> **Your Windows OpenClaw install is never touched.** Migration only copies files — nothing is moved, deleted, or modified on the Windows side. Run both versions side by side until you're satisfied, then uninstall Windows OpenClaw whenever you're ready.
+
 ## What Gets Migrated
 
 | Item | Migrated? | Notes |
