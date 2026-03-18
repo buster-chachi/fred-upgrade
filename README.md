@@ -59,6 +59,10 @@ curl -fsSL https://raw.githubusercontent.com/buster-chachi/fred-upgrade/main/mig
 | `.env` config | ✅ | Copied |
 | Windows-only integrations (iMessage, Apple Notes) | ❌ | macOS only — skipped |
 
+## Design Notes
+
+**Why not a single PowerShell script?** Once WSL2 is running, you're in Linux — that's the environment OpenClaw lives in. Keeping the Linux setup in bash means the scripts work correctly and get Fred comfortable with the tools he'll use going forward. The handoff from PowerShell → bash is intentional.
+
 ## Troubleshooting
 
 **WSL won't install** — make sure virtualization is enabled in BIOS and you're running PowerShell as Administrator.
