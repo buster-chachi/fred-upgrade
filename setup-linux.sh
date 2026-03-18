@@ -30,12 +30,9 @@ ok "Base dependencies installed"
 if command -v node &>/dev/null; then
     ok "Node.js already installed: $(node --version)"
 else
-    info "Installing Node.js (LTS via nvm)..."
-    curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-    nvm install --lts
-    nvm use --lts
+    info "Installing Node.js LTS from NodeSource apt repository..."
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    sudo apt-get install -y -qq nodejs
     ok "Node.js installed: $(node --version)"
 fi
 
@@ -46,24 +43,17 @@ if command -v openclaw &>/dev/null; then
     ok "OpenClaw already installed: $(openclaw --version 2>/dev/null || echo 'version unknown')"
 else
     info "Installing OpenClaw via npm..."
-    # Ensure nvm node is in PATH
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
     npm install -g openclaw
     ok "OpenClaw installed"
 fi
 
 # ── 4. Shell config ───────────────────────────────────────────────
-info "Ensuring NVM and OpenClaw are in PATH on future logins..."
+info "Ensuring npm global bin is in PATH..."
+NPM_PREFIX=$(npm config get prefix 2>/dev/null || echo "/usr")
+NPM_BIN="$NPM_PREFIX/bin"
 BASHRC="$HOME/.bashrc"
-if ! grep -q "NVM_DIR" "$BASHRC"; then
-    cat >> "$BASHRC" << 'EOF'
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
-EOF
+if ! grep -q "$NPM_BIN" "$BASHRC"; then
+    echo -e "\n# npm global bin\nexport PATH=\"$NPM_BIN:\$PATH\"" >> "$BASHRC"
 fi
 ok "Shell config updated"
 
