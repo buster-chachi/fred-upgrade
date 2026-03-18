@@ -67,11 +67,6 @@ EOF
 fi
 ok "Shell config updated"
 
-# ── 5. python-dotenv (for openclaw-skills) ───────────────────────
-info "Installing python-dotenv..."
-pip3 install -q python-dotenv
-ok "python-dotenv installed"
-
 # ── Done ─────────────────────────────────────────────────────────
 header "Setup Complete!"
 echo -e "OpenClaw is installed. Next steps:"
