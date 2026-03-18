@@ -30,9 +30,8 @@ ok "Base dependencies installed"
 if command -v node &>/dev/null; then
     ok "Node.js already installed: $(node --version)"
 else
-    info "Installing Node.js LTS from NodeSource apt repository..."
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-    sudo apt-get install -y -qq nodejs
+    info "Installing Node.js from apt..."
+    sudo apt-get install -y -qq nodejs npm
     ok "Node.js installed: $(node --version)"
 fi
 
