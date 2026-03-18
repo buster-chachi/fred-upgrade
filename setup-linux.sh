@@ -30,8 +30,9 @@ ok "Base dependencies installed"
 if command -v node &>/dev/null; then
     ok "Node.js already installed: $(node --version)"
 else
-    info "Installing Node.js from apt..."
-    sudo apt-get install -y -qq nodejs npm
+    info "Installing Node.js 22.x from NodeSource (OpenClaw requires >=22.16.0)..."
+    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+    sudo apt-get install -y -qq nodejs
     ok "Node.js installed: $(node --version)"
 fi
 
